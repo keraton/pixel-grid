@@ -1,0 +1,8 @@
+# Created by .ignore support plugin (hsz.mobi)
+/.idea/vcs.xml
+.idea/inspectionProfiles/
+.idea/modules.xml
+.idea/pixel-grid.iml
+.idea/sonarlint/
+.idea/workspace.xml
+s101plugin.state

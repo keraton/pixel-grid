@@ -11,6 +11,7 @@ var pixelGrid = (function($) {
     var height;
     var c; // context
     var cachedImage;
+    var ctx = canvas.getContext('2d');
 
     function setInitialWidthAndHeight(initialWidth, initialHeight) {
         width = initialWidth || 
@@ -161,6 +162,30 @@ var pixelGrid = (function($) {
         }
     }
 
+
+    function getPixel(x, y)
+    {
+        var p = ctx.getImageData(x, y, 1, 1).data;
+        var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+        return hex;
+    }
+
+    function rgbToHex(r, g, b) {
+        if (r > 255 || g > 255 || b > 255)
+            throw "Invalid color component";
+        return ((r << 16) | (g << 8) | b).toString(16);
+    }
+
+    function create2DArray(rows) {
+        var arr = [];
+
+        for (var i=0;i<rows;i++) {
+            arr[i] = [];
+        }
+
+        return arr;
+    }
+
     //==========================================================================
     // PUBLIC API
     //==========================================================================
@@ -244,13 +269,26 @@ var pixelGrid = (function($) {
         }
     };
 
+    var scan = function () {
+        var arr = create2DArray((canvas.height/10) + 1);
+        for (var i=0; i< canvas.width; i=i+10) {
+            for (var j=0; j< canvas.height; j=j+10) {
+                arr[j/10][i/10] = getPixel(i+1, j+1);
+            }
+        }
+        return arr;
+    };
+
+
+
     return {
         init: init,
         clear: clear,
         width: width,
         height: height,
         colorPixel: colorPixel,
-        batchColor: batchColor
+        batchColor: batchColor,
+        scan: scan
     };
 }($));
 

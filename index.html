@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Pixel</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    </nav>
+
+
+    <div class="container">
+        <main>
+
+            <div>&nbsp;</div>
+            <h1>Spring Pixel</h1>
+
+            <div>
+                <canvas data-anchor="grid"></canvas>
+            </div>
+
+            <div>&nbsp;</div>
+            <h5>AnsiColor</h5>
+
+            <div>
+                <button type="button" class="btn ansi-btn" data-color="#000000"
+                        style="background-color: #000000; border-color: #000000">&nbsp;
+                </button>
+                <button type="button" class="btn ansi-btn" data-color="#AA0000"
+                        style="background-color: #AA0000; border-color: #AA0000">&nbsp;
+                </button>
+                <button type="button" class="btn ansi-btn" data-color="#00AA00"
+                        style="background-color: #00AA00; border-color: #00AA00">&nbsp;
+                </button>
+                <button type="button" class="btn ansi-btn" data-color="#AA5500"
+                        style="background-color: #AA5500; border-color: #AA5500">&nbsp;
+                </button>
+                <button type="button" class="btn ansi-btn" data-color="#0000AA"
+                        style="background-color: #0000AA; border-color: #0000AA">&nbsp;
+                </button>
+                <button type="button" class="btn ansi-btn" data-color="#AA00AA"
+                        style="background-color: #AA00AA; border-color: #AA00AA">&nbsp;
+                </button>
+                <button type="button" class="btn ansi-btn" data-color="#00AAAA"
+                        style="background-color: #00AAAA; border-color: #00AAAA">&nbsp;
+                </button>
+                <button type="button" class="btn ansi-btn" data-color="#AAAAAA"
+                        style="background-color: #AAAAAA; border-color: #AAAAAA">&nbsp;
+                </button>
+                <button type="button" class="btn ansi-btn" data-color="#555555"
+                        style="background-color: #555555; border-color: #555555">&nbsp;
+                </button>
+                <button type="button" class="btn ansi-btn" data-color="#FF5555"
+                        style="background-color: #FF5555; border-color: #FF5555">&nbsp;
+                </button>
+                <button type="button" class="btn ansi-btn" data-color="#55FF00"
+                        style="background-color: #55FF00; border-color: #55FF00">&nbsp;
+                </button>
+                <button type="button" class="btn ansi-btn" data-color="#FFFF55"
+                        style="background-color: #FFFF55; border-color: #FFFF55">&nbsp;
+                </button>
+                <button type="button" class="btn ansi-btn" data-color="#FFFF55"
+                        style="background-color: #FFFF55; border-color: #FFFF55">&nbsp;
+                </button>
+                <button type="button" class="btn ansi-btn" data-color="#5555FF"
+                        style="background-color: #5555FF; border-color: #5555FF">&nbsp;
+                </button>
+                <button type="button" class="btn ansi-btn" data-color="#5555FF"
+                        style="background-color: #5555FF; border-color: #5555FF">&nbsp;
+                </button>
+                <button type="button" class="btn ansi-btn" data-color="#FF55FF"
+                        style="background-color: #FF55FF; border-color: #FF55FF">&nbsp;
+                </button>
+                <button type="button" class="btn ansi-btn" data-color="#55FFFF"
+                        style="background-color: #55FFFF; border-color: #55FFFF">&nbsp;
+                </button>
+                <button type="button" class="btn ansi-btn" data-color="#FFFFFF"
+                        style="background-color: #FFFFFF; border-color: #FFFFF0">&nbsp;
+                </button>
+
+                <button type="button" class="btn ansi-btn" data-color="#f2f2f2"
+                        style="background-color: #f2f2f2; border-color: #f2f2f2">Delete
+                </button>
+
+
+                <button id="button-clear" type="button" class="btn btn-danger">Clear</button>
+
+            </div>
+
+            <hr>
+
+            <button id="button-export" type="button" class="btn btn-primary">Export to Banner</button>
+
+            <a id='download-link' download="file_downloaded_via_data_URL.txt" class="btn btn-success" style="display: none">Download Banner Text</a>
+
+        </main>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="pixelGrid.js"></script>
+
+    <script>
+        $( document ).ready(function() {
+
+            var mapColor = {
+                 '#000000' : '${AnsiColor.BLACK}',
+                 '#aa0000' : '${AnsiColor.RED}' ,
+                 '#00aa00' : '${AnsiColor.GREEN}',
+                 '#aa5500' : '${AnsiColor.YELLOW}',
+                 '#0000aa' : '${AnsiColor.BLUE}',
+                 '#aa00aa' : '${AnsiColor.MAGENTA}',
+                 '#00aaaa' : '${AnsiColor.CYAN}',
+                 '#aaaaaa' : '${AnsiColor.WHITE}',
+                 '#555555' : '${AnsiColor.BRIGHT_BLACK}',
+                 '#ff5555' : '${AnsiColor.BRIGHT_RED}',
+                 '#55ff00' : '${AnsiColor.BRIGHT_GREEN}',
+                 '#ffff55' : '${AnsiColor.BRIGHT_YELLOW}',
+                 '#5555ff' : '${AnsiColor.BRIGHT_BLUE}',
+                 '#ff55ff' : '${AnsiColor.BRIGHT_MAGENTA}',
+                 '#55ffff' : '${AnsiColor.BRIGHT_CYAN}',
+                 '#ffffff' : '${AnsiColor.BRIGHT_WHITE}',
+            };
+
+            pixelGrid.width(1000);
+            pixelGrid.height(350);
+
+            var $canvas = $('[data-anchor="grid"]');
+
+            $(".ansi-btn").click(function () {
+                var color = $(this).data('color');
+                $canvas.trigger('gridSetCurrentColor', [color]);
+            });
+
+            $("#button-clear").click(function () {
+                pixelGrid.clear();
+            });
+
+
+            $("#button-export").click(function () {
+                var exported = pixelGrid.scan();
+                var rawData = pixelGrid.scan();
+
+                var data = "";
+                for (var i=0; i<rawData.length; i++) {
+                    var oldColor = "${AnsiColor.WHITE}";
+
+                    for(var j=0; j<rawData[i].length; j++) {
+                        var color = rawData[i][j];
+                        var ansiColor = mapColor[color];
+                        if ("#f2f2f2" == color) {
+                            data += " ";
+                        }
+                        else {
+                            if (oldColor == ansiColor) {
+                                // Do nothing
+                            }
+                            else {
+                                oldColor = ansiColor;
+                                data += oldColor;
+                            }
+                            data += "█";
+                        }
+                    }
+                    data += "\n";
+                }
+
+                a.href='data:text/plain;charset=US-ASCII,' + data;
+
+                $("#button-export").hide();
+                $("#download-link").show();
+
+            });
+
+            var a = document.getElementById('download-link');
+
+
+        });
+    </script>
+
+</body>
+</html>
