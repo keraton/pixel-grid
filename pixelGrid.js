@@ -12,6 +12,8 @@ var pixelGrid = (function($) {
     var c; // context
     var cachedImage;
     var ctx = canvas.getContext('2d');
+    var drawing = false;
+    var isFill = false;
 
     function setInitialWidthAndHeight(initialWidth, initialHeight) {
         width = initialWidth || 
@@ -76,7 +78,7 @@ var pixelGrid = (function($) {
     }
 
     function clickEventListener() {
-        $canvas.on('click', function(e) {
+        var draw = function(e) {
             var x;
             var y;
             var startX;
@@ -101,6 +103,21 @@ var pixelGrid = (function($) {
             x = getScaledCoordinate(startX);
             y = getScaledCoordinate(startY);
             $canvas.trigger('gridPixelAdded', [x, y, currentColor]);
+        };
+
+        $canvas.on('mousedown', function(e) {
+            draw(e);
+            drawing = true;
+    });
+
+        $canvas.on('mouseup', function(e) {
+            drawing = false;
+        });
+
+        $canvas.on('mousemove', function(e) {
+            if (drawing) {
+                draw(e);
+            }
         });
     }
 
@@ -278,7 +295,6 @@ var pixelGrid = (function($) {
         }
         return arr;
     };
-
 
 
     return {
