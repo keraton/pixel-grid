@@ -118,6 +118,7 @@
             <hr>
 
             <button id="button-export" type="button" class="btn btn-primary">Export to Banner</button>
+            <button id="json-export" type="button" class="btn btn-primary">Export to Json</button>
 
             <a id='download-link' download="banner.txt" class="btn btn-success" style="display: none">Download Banner Text</a>
 
@@ -198,17 +199,40 @@
                 var a = document.getElementById('download-link');
                 a.href='data:text/plain;charset=US-ASCII,' + data;
 
-                $("#button-export").hide();
-                $("#download-link").show();
+                a.click();
+            });
+
+            $("#json-export").click(function () {
+                var rawData = pixelGrid.scan();
+
+
+
+                var coordinates = [];
+                for (var i=0; i<rawData.length; i++) {
+                    for(var j=0; j<rawData[i].length; j++) {
+                        var color = rawData[i][j];
+                        if ("#f2f2f2" == color) {
+                            // Do nothing
+                        }
+                        else {
+                            coordinates.push({"x": j, "y": i, "color": color})
+                        }
+                    }
+                }
+
+                console.log(coordinates);
+
+                var jsonData = {
+                    "coordinates": coordinates
+                };
+
+                var a = document.getElementById('download-link');
+                a.href='data:text/plain;charset=US-ASCII,' + JSON.stringify(jsonData);
+
+                a.click();
 
             });
 
-            $("#download-link").click(function () {
-
-                $("#download-link").hide();
-                $("#button-export").show();
-
-            });
 
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()

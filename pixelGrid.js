@@ -276,13 +276,10 @@ var pixelGrid = (function($) {
      * TODO -- validate params, JSON, and show error message
      */
     var batchColor = function(list) {
-        var colors = list.colors;
         var details = list.coordinates;
-        var colorCode;
 
         for (var i in details) {
-            colorCode = colors[details[i].color];
-            colorPixel(details[i].x, details[i].y, colorCode);
+            colorPixel(details[i].x, details[i].y, details[i].color);
         }
     };
 
