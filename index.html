@@ -101,7 +101,7 @@
                     &nbsp;
                 </button>
                 <button type="button" class="btn ansi-btn" data-color="#FFFFFF"
-                        style="background-color: #FFFFFF; border-color: #FFFFF0"
+                        style="background-color: #FFFFFF; border-color: #555555"
                         data-toggle="tooltip" data-placement="top" title="bright white">
                     &nbsp;
                 </button>
@@ -117,10 +117,41 @@
 
             <hr>
 
-            <button id="button-export" type="button" class="btn btn-primary">Export to Banner</button>
-            <button id="json-export" type="button" class="btn btn-primary">Export to Json</button>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                        <button id="button-export" type="button" class="btn btn-primary"
+                                data-toggle="tooltip" data-placement="top" title="Export to Banner.txr for Spring Boot">
+                            Export to Banner
+                        </button>
+                        <button id="json-export" type="button" class="btn btn-primary"
+                                data-toggle="tooltip" data-placement="top" title="Save to a json format for working later">
+                            Export to Json
+                        </button>
+                    </div>
+                    <div class="col-sm">
+                        <div class="custom-file">
+                            <input id="file" type="file" class="custom-file-input"
+                                   data-toggle="tooltip" data-placement="top" title="Import saved json format to continue working">
+                            <label class="custom-file-label" >Import Json file</label>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div>&nbsp;</div>
+                    </div>
 
-            <a id='download-link' download="banner.txt" class="btn btn-success" style="display: none">Download Banner Text</a>
+                </div>
+            </div>
+
+
+
+
+
+            <a id='download-link' download="banner.txt"  style="display: none"></a>
+            <a id='json-download-link' download="banner.json"  style="display: none"></a>
+
+
+
 
         </main>
     </div>
@@ -226,7 +257,7 @@
                     "coordinates": coordinates
                 };
 
-                var a = document.getElementById('download-link');
+                var a = document.getElementById('json-download-link');
                 a.href='data:text/plain;charset=US-ASCII,' + JSON.stringify(jsonData);
 
                 a.click();
@@ -236,7 +267,28 @@
 
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
-            })
+            });
+
+            (function(){
+
+                function onChange(event) {
+                    var reader = new FileReader();
+                    reader.onload = onReaderLoad;
+                    reader.readAsText(event.target.files[0]);
+                }
+
+                function onReaderLoad(event){
+                    var obj = JSON.parse(event.target.result);
+                    pixelGrid.batchColor(obj);
+                }
+
+                function alert_data(name, family){
+                    alert('Name : ' + name + ', Family : ' + family);
+                }
+
+                document.getElementById('file').addEventListener('change', onChange);
+
+            }());
 
 
         });
