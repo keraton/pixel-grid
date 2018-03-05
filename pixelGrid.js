@@ -172,7 +172,7 @@ var pixelGrid = (function($) {
     function validateDimensionInput(side) {
         if (isNaN(side)) {
             return false;
-        } else if (side < 0 || side > 1000) {
+        } else if (side < 0 || side > 10000) {
             return false;
         } else {
             return true;
