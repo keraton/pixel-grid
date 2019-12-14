@@ -269,7 +269,8 @@
                 };
 
                 var a = document.getElementById('json-download-link');
-                a.href='data:text/plain;charset=US-ASCII,' + JSON.stringify(jsonData);
+                vzt data = JSON.stringify(jsonData);
+                a.href='data:text/plain;charset=US-ASCII,' + data;
 
                 a.click();
 
