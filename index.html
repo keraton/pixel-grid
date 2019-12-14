@@ -247,8 +247,6 @@
             $("#json-export").click(function () {
                 var rawData = pixelGrid.scan();
 
-
-
                 var coordinates = [];
                 for (var i=0; i<rawData.length; i++) {
                     for(var j=0; j<rawData[i].length; j++) {
@@ -257,7 +255,8 @@
                             // Do nothing
                         }
                         else {
-                            coordinates.push({"x": j, "y": i, "color": color})
+                            var encodeColor = '%23' + color.substr(1);
+                            coordinates.push({"x": j, "y": i, "color": encodeColor})
                         }
                     }
                 }
